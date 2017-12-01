@@ -27,3 +27,8 @@ export const getToken = () => AsyncStorage.getItem(USER_KEY);
 export const getProfile = (accessToken) => axios.get(USERS_URL + '/' + accessToken);
 
 export const getNews = () => axios.get(INFOS_URL);
+
+export const getUsers = (type = null) => {
+  let url = USERS_URL + '/' + type;
+  return axios.get(url);
+};
