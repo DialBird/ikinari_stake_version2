@@ -7,6 +7,7 @@ import {
   OthersScreen,
   RankScreen,
   ShopScreen,
+  ShopDetailScreen,
   SignInScreen,
   SignUpScreen
 } from './screens';
@@ -22,6 +23,21 @@ const SignedOut = StackNavigator({
     screen: SignInScreen,
     navigationOptions: {
       headerTitle: 'サインイン'
+    }
+  }
+});
+
+const ShopNavigator = StackNavigator({
+  Shop: {
+    screen: ShopScreen,
+    navigationOptions: {
+      title: '店舗一覧'
+    }
+  },
+  ShopDetail: {
+    screen: ShopDetailScreen,
+    navigationOptions: {
+      gesturesEnabled: false
     }
   }
 });
@@ -54,7 +70,7 @@ const SignedIn = TabNavigator({
     }
   },
   Shop: {
-    screen: ShopScreen,
+    screen: ShopNavigator,
     navigationOptions: {
       tabBarLabel: '店舗情報',
       tabBarIcon: ({tintColor}) => (
