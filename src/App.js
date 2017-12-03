@@ -5,8 +5,12 @@
  */
 
 import React from 'react';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
 import { createRootNavigator } from './Router';
 import { isSignedIn } from './common/auth';
+import Reducers from './reducers';
 
 console.disableYellowBox = true;
 
@@ -29,7 +33,12 @@ export default class App extends React.Component {
 
     if (!checkedSignedIn) return null;
 
+    const store = createStore(Reducers, {}, applyMiddleware(ReduxThunk));
     const Router = createRootNavigator(signedIn);
-    return <Router />;
+    return (
+      <Provider store={store}>
+        <Router />
+      </Provider>
+    );
   }
 }
