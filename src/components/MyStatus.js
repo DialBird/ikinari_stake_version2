@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
 export default ({ user }) => {
+  if (!user) user = { name: '', point: 0 };
   const { name, point } = user;
   return (
     <View style={styles.myStatusContainer}>
