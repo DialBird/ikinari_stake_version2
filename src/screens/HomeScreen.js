@@ -8,27 +8,31 @@ import {
   FlatList,
   Dimensions
 } from 'react-native';
+import { connect } from 'react-redux';
 import { getToken, getProfile, getNews } from '../common/auth';
 import { MyStatus, Separator } from '../components';
+import { userChanged, newsChanged } from '../actions';
 
 class HomeScreen extends React.Component {
-  constructor() {
-    super();
-    this.state = { user: {}, news: [] };
-  }
-
   componentWillMount() {
     getToken()
       .then(getProfile)
       .then(res => {
-        this.setState({user: res.data});
+        this.props.userChanged(res.data);
       })
-      .catch(err => alert('情報を取得できませんでした: ' + err));
+      .catch(err => {
+        alert('ログイン情報を取得できませんでした: ' + err);
+        this.goSignUp();
+      });
     getNews()
       .then(res => {
-        this.setState({news: res.data});
+        this.props.newsChanged(res.data);
       })
-      .catch(err => alert('情報を取得できませんでした: ' + err));
+      .catch(err => alert('ニュースを取得できませんでした: ' + err));
+  }
+
+  goSignUp() {
+    this.props.navigation.navigate('SignedOut');
   }
 
   renderHeader() {
@@ -57,7 +61,6 @@ class HomeScreen extends React.Component {
   }
 
   render() {
-    const { news } = this.state;
     return (
       <View style={styles.container}>
         <View style={{flex: 3}}>
@@ -68,11 +71,11 @@ class HomeScreen extends React.Component {
           />
         </View>
         <View style={{flex: 1}}>
-          <MyStatus user={this.state.user}/>
+          <MyStatus user={this.props.user}/>
         </View>
         <View style={{flex: 2}}>
           <FlatList
-            data={news}
+            data={this.props.news}
             keyExtractor={item => item.id}
             renderItem={this.renderItem.bind(this)}
             ItemSeparatorComponent={this.renderSeparator}
@@ -110,4 +113,9 @@ const styles = StyleSheet.create({
   }
 });
 
-export default HomeScreen;
+const mapStateToProps = ({home}) => {
+  const { user, news } = home;
+  return { user, news };
+};
+
+export default connect(mapStateToProps, { userChanged, newsChanged })(HomeScreen);
