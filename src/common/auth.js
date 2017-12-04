@@ -8,7 +8,19 @@ export const isSignedIn = () => {
   return new Promise((resolve, reject) => {
     AsyncStorage.getItem(USER_KEY)
       .then(res => {
-        resolve(res);
+        // まだログインしていない場合
+        if (res === null) return resolve(false);
+
+        // ログインした後、トークンが有効なままかどうか
+        getProfile(res)
+          .then(res => {
+            if (res.data !== null) return resolve(true);
+
+            alert('トークンの期限が切れたので、ログインしなおしてください');
+            onSignOut();
+            resolve(false);
+          })
+          .catch(err => reject(err));
       })
       .catch(err => reject(err));
   });
