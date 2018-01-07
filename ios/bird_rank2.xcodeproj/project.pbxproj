@@ -1279,7 +1279,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "jp.keisuke.bird-rank2";
+				PRODUCT_BUNDLE_IDENTIFIER = jp.keisuke.birdrank2;
 				PRODUCT_NAME = bird_rank2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1298,7 +1298,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "jp.keisuke.bird-rank2";
+				PRODUCT_BUNDLE_IDENTIFIER = jp.keisuke.birdrank2;
 				PRODUCT_NAME = bird_rank2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
